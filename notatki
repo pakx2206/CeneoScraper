@@ -54,3 +54,9 @@ if not os.path.exists("./opinions"):
     os.mkdir("./opinions")
 with open(f"./opinions/{product_code}.json", "w", encoding="UTF-8") as jf:    
     json.dump(opinions_all, jf, indent=4, ensure_ascii=False)
+#project
+opinions/
+
+
+
+pip instal pandas/matplotlib
