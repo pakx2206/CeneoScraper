@@ -30,9 +30,9 @@ selectors = {
             "pros": ("div.review-feature__col:has(> div.review-feature__title--positives) > div.review-feature__item", None, True)
         }
 # produkt_code = input("Podaj kod produktu: ")
-# product_code = "100361771"
-# product_code = "137199086"
-product_code = "85920806"
+
+product_code = "137199086"
+
 url = f"https://www.ceneo.pl/{product_code}#tab=reviews"
 opinions_all = []
 while url:
