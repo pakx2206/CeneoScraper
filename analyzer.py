@@ -12,8 +12,13 @@ stats = {
     "opinions_count": len(opinions.index),
     "pros_count": opinions.pros.astype(bool).sum(),
     "cons_count": opinions.cons.astype(bool).sum(),
-    "average": opinions.score.mean()
+    "average_score": opinions.score.mean()
 }
 print(f'''Dla produktu o kodzie {product_code} pobranych zostało {stats["opinions_count"]} opinii. 
 Dla {stats["pros_count"]} opinii podana została lista zalet produktu, a dla {stats["cons_count"]}
 opinii lsita jego wad. Średnia ocena produktu wynosi {stats["average_score"]:.2f}.''')
+
+score = opinions.score.value_counts()
+print(score)
+score.plot.bar()
+plt.show()
