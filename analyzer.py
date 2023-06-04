@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+import json
 from matplotlib import pyplot as plt
 
 print(*list(map(lambda x: x.split(".")[0], os.listdir("./opinions"))), sep="\n")
@@ -13,8 +14,8 @@ opinions.score= opinions.score.map(lambda x: x.split("/")[0].replace(",",".")).a
 
 stats = {   
     "opinions_count": len(opinions.index),
-    "pros_count": opinions.pros.astype(bool).sum(),
-    "cons_count": opinions.cons.astype(bool).sum(),
+    "pros_count": int(opinions.pros.astype(bool).sum()),
+    "cons_count": int(opinions.cons.astype(bool).sum()),
     "average_score": opinions.score.mean()
 }
 print(f'''Dla produktu o kodzie {product_code} pobranych zostało {stats["opinions_count"]} opinii. 
@@ -29,3 +30,18 @@ print(score)
 score.plot.bar()
 plt.savefig(f"./plots/{product_code}_score.png")
 plt.close()
+
+recommendation = opinions.recommendation.value_counts(dropna=False)
+print(recommendation)
+recommendation.plot.pie()
+plt.savefig(f"./plots/{product_code}_recommendation.png")
+plt.close()
+
+if not os.path.exists("./stats/"):
+    os.mkdir("./stats/")
+
+stats["score"] = score.to_dict()
+stats["recommendation"] = recommendation.to_dict()
+with open(f"./stats/{product_code}.json", "w", encoding="UTF-8") as jf:
+    json.dump(stats, jf, indent=4,ensure_ascii=False)
+
