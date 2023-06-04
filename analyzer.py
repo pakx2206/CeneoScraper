@@ -1,5 +1,8 @@
 import os
 import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+
 print(*list(map(lambda x: x.split(".")[0], os.listdir("./opinions"))), sep="\n")
 
 
@@ -18,7 +21,11 @@ print(f'''Dla produktu o kodzie {product_code} pobranych zostało {stats["opinio
 Dla {stats["pros_count"]} opinii podana została lista zalet produktu, a dla {stats["cons_count"]}
 opinii lsita jego wad. Średnia ocena produktu wynosi {stats["average_score"]:.2f}.''')
 
-score = opinions.score.value_counts()
+if not os.path.exists("./plots/"):
+    os.mkdir("./plots/")
+
+score = opinions.score.value_counts().reindex(list(np.arange(0,5.5,0.5)), fill_value=0)
 print(score)
 score.plot.bar()
-plt.show()
+plt.savefig(f"./plots/{product_code}_score.png")
+plt.close()
